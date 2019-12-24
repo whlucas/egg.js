@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 点提交的时候，访问add路由，用post请求 -->
+    <!-- 他这个egg里面有一个要求，只有和后台进行签名认证的人才能post数据 -->
+    <!-- 这个页面被渲染的时候传进来了一个秘钥 -->
+    <!-- 发post请求的时候需要把这个秘钥带着才行 -->
+    <!-- 传的时候可以在url里面直接get传值，也可以在body里面post传值 -->
+    <!-- 注意这里传过去的key一定是_csrf要多一个_ -->
+    <form action="/doLogin?_csrf=<%=csrf%>" method="POST">
+
+        <!-- 也可以这么传值，用隐藏的表单域post传值 -->
+        <!-- <input type="hidden" name="_csrf" value="<%=csrf%>"> -->
+
+        用户名: <input type="text" name="username" /> <br><br>
+
+        密　码: <input type="password" name="password" type="password" /> <br><br>
+
+        <button type="submit">提交</button>
+    </form>
+
+
+</body>
+
+</html>

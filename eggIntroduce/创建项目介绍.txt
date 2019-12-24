@@ -1,0 +1,54 @@
+
+
+
+
+1、要求nodejs版本必须大于8.0并且要用LTS 版本
+
+
+2、创建egg的环境   npm i egg-init -g  / cnpm i egg-init -g        (只需要安装一次)
+
+
+
+3、创建项目
+
+	cd 到目录里面   （注意目录不要用中文  不要有空格）
+
+	
+	egg-init 项目名称 --type=simple    创建项目  如：egg-init eggdemo01 --type=simple
+
+
+	cd eggdemo01 
+
+
+	cnpm install
+
+
+
+4、运行项目
+
+	npm run dev  
+
+
+
+
+注意:
+
+	egg-init 项目名称 --type=simple   创建项目失败的解决方案。
+
+
+	1、可以找个翻墙软件（IT营官方交流群有）
+	
+	2、可以在手机上开个热点，让电脑连接手机网络。egg-init好以后在切换回原来的网络。
+
+	3、直接把老师创建好的项目拿过来用。  egg-init就是从互联网复制一个简单的包到我们本地。
+
+
+    
+
+
+
+
+
+
+
+

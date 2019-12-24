@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 引入public里面的css，不用配置直接引入 -->
+    <link rel="stylesheet" href="/public/css/basic.css">
+</head>
+<body>
+    <h1>新闻</h1>
+    <%=msg%>
+
+    <ul>
+        <%for(var i=0; i < list.length; i++){%>
+            <li><%=list[i]%></li>
+        <%}%>
+    </ul>
+
+    <!-- 访问静态资源在这里不用配置，因为是放在了public里面 -->
+    <!-- 在public前面多加了一个/表示从根目录起，层级比较深的情况下要在前面加一个/ -->
+    <img src="/public/images/11.jpg" alt="">  
+</body>
+</html>
