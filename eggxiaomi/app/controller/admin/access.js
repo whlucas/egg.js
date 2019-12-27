@@ -92,39 +92,15 @@ class AccessController extends BaseController {
 	async doEdit() {
 		console.log(this.ctx.request.body);
 
-		/*
-		{
-		  id: '5b8e4422b3cc641f4894d7bc',
-		  _csrf: '8F3tGQd8-w1HtBpsyUbnBSQY5Up7OOqHXYSY',
-	
-		  module_name: '权限管理111',
-		  type: '3',
-		  action_name: '增加权限1',
-		  url: '/admin/access/add',
-		  module_id: '5b8e3836f71aad20249c2f98',
-		  sort: '100',
-		  description: '增加权限---操作1111' 
-		}
-		*/
 		const updateResult = this.ctx.request.body;
 
 		const id = updateResult.id;
 
-		const module_id = updateResult.module_id;
+		const accessResult = await this.ctx.model.Access.findByPk(id);
 
-
-		// 菜单  或者操作
-		if (module_id != 0) {
-
-			updateResult.module_id = this.app.mongoose.Types.ObjectId(module_id); // 调用mongoose里面的方法把字符串转换成ObjectId
-
-		}
-
-		const result = await this.ctx.model.Access.updateOne({ _id: id }, updateResult);
+		accessResult.update(updateResult)
 
 		await this.success('/admin/access', '修改权限成功');
-
-
 	}
 }
 module.exports = AccessController;

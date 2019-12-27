@@ -13,9 +13,9 @@
                 <h4> <%=asideList[i].module_name %> <span class="nav_open"></span></h4>                     
                 <ul>
 
-                        <%for(var j=0;j<asideList[i].items.length;j++){%> 
-                            <%if((asideList[i].items[j].checked && asideList[i].items[j].type!=3) || (userinfo.is_super==1 && asideList[i].items[j].type!=3)){%>
-                                <li  class="list-group-item"> <a href="<%=asideList[i].items[j].url%>" target="rightMain">  <%=asideList[i].items[j].action_name %></a></li>
+                        <%for(var j=0;j<asideList[i].accesses.length;j++){%> 
+                            <%if((asideList[i].accesses[j].checked && asideList[i].accesses[j].type!=3) || (userinfo.is_super==1 && asideList[i].accesses[j].type!=3)){%>
+                                <li  class="list-group-item"> <a href="<%=asideList[i].accesses[j].url%>" target="rightMain">  <%=asideList[i].accesses[j].action_name %></a></li>
                             <%}%>
                         <%}%>
                 </ul>

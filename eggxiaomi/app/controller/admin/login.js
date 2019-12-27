@@ -37,8 +37,6 @@ class LoginController extends BaseController {
 				// 登录成功
 				// 1、保存用户信息
 				this.ctx.session.userinfo = result.dataValues;
-				console.log(result.dataValues.username)
-				console.log(1111)
 
 				// 2、跳转到用户中心
 				this.ctx.redirect('/admin');

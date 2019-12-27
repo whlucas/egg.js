@@ -62,15 +62,17 @@ class BaseController extends Controller {
 		const model = this.ctx.request.query.model; // Role
 		const id = this.ctx.request.query.id;
 
-		const result = await this.ctx.model[model].findByPk(id);  // 用这种方式拿到传进来的model
+		const result = await this.ctx.model[model].destroy({  // 用这种方式拿到传进来的model
+			where: {
+				id
+			},
+			force: true 
+		});
+
 		if (!result) {
 			this.ctx.state = 404;
 			return;
 		}
-		await result.destroy({
-			force: true,
-		})
-		console.log(this.ctx.state.prevPage)
 
 		// 上一个地址从中间键里面取
 		this.ctx.redirect(this.ctx.state.prevPage);

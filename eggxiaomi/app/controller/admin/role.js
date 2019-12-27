@@ -13,7 +13,6 @@ class RoleController extends BaseController {
 			// 这里不用往里面传.dataValues自动帮你序列化
 			list: result,
 		});
-
 	}
 
 	// 增加角色
@@ -86,9 +85,7 @@ class RoleController extends BaseController {
 
 		const result = await this.service.admin.getAuthList(role_id);
 
-
 		await this.ctx.render('admin/role/auth', {
-
 			list: result,
 			role_id,
 		});
@@ -100,7 +97,7 @@ class RoleController extends BaseController {
 		/*
 			1、删除当前角色下面的所有权限
 	
-			2、把获取的权限和角色增加到数据库
+			2、把获取的权限和角色增加到role_access表里面
 	
 		*/
 		console.log(this.ctx.request.body);
@@ -109,23 +106,29 @@ class RoleController extends BaseController {
 
 		const access_node = this.ctx.request.body.access_node;
 
+		const AddData = [];  // [{}, {}, {}] 很多条数据
+
 		// 1、删除当前角色下面的所有权限
+		
+		await this.ctx.model.RoleAccess.destroy({
+			where: {
+				role_id
+			},
+			force: true
+		});
 
-		await this.ctx.model.RoleAccess.deleteMany({ role_id });
 
+		// 组织一下数据一次性全部创建
+		for (let i = 0; i < access_node.length; i++) {
+			AddData.push({
+				role_id,
+				access_id: access_node[i],
+			})
+		}
 
 		// 2、给role_access增加数据 把获取的权限和角色增加到数据库
 
-		for (let i = 0; i < access_node.length; i++) {
-
-			const roleAccessData = new this.ctx.model.RoleAccess({
-
-				role_id,
-				access_id: access_node[i],
-			});
-
-			roleAccessData.save();
-		}
+		await this.ctx.model.RoleAccess.bulkCreate(AddData)
 
 
 		await this.success('/admin/role/auth?id=' + role_id, '授权成功');

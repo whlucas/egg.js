@@ -19,17 +19,18 @@ module.exports = (options, app) => {
 		if (ctx.session.userinfo) {
 			ctx.state.userinfo = ctx.session.userinfo; // 全局变量
 
-			// const hasAuth = await ctx.service.admin.checkAuth();
+			const hasAuth = await ctx.service.admin.checkAuth();
 
-			// if (hasAuth) {
-			// 	// 获取权限列表
-			// 	ctx.state.asideList = await ctx.service.admin.getAuthList(ctx.session.userinfo.role_id);
+			if (hasAuth) {
+
+				// 获取权限列表，设置到全局变量上面
+				// 为了给侧边栏给数据
+				ctx.state.asideList = await ctx.service.admin.getAuthList(ctx.session.userinfo.role_id);
 
 				await next();
-			// } else {
-
-			// 	ctx.body = '您没有权限访问当前地址';
-			// }
+			} else {
+				ctx.body = '您没有权限访问当前地址';
+			}
 
 
 		} else {
