@@ -1,47 +1,37 @@
+'use strict';
 
-/*
-1、模块名称: 模块名称就是左侧的主菜单名称，如果增加数据的时候是模块，那么需要指定节点类型是模块，并且选择所属模块为顶级模块
-
-
-2、节点类型： 1、表示模块   2、表示菜单     3、操作
-
-
-3、操作名称:如果节点类型是菜单，那么操作名称就是左侧菜单的名称。如果节点类型是操作，那么操作名称就是具体的操作名称
-
-
-4、操作地址：用户实际访问的地址
-
-
-5、所属模块：模块（顶级模块）  菜单和操作（父亲模块）
-
-
-*/
-
+// 配置好了直接在这里面定义表
 module.exports = app => {
-  const mongoose = app.mongoose; /* 引入建立连接的mongoose */
-  const Schema = mongoose.Schema;
-  const d = new Date();
-  const AccessSchema = new Schema({
-    module_name: { type: String }, // 模块名称
-    action_name: { type: String }, // 操作名称
-    type: { type: Number }, // 节点类型 :  1、表示模块   2、表示菜单     3、操作
-    url: { type: String },
-    module_id: { // 此module_id和当前模型的_id关联     module_id= 0 表示模块
-      type: Schema.Types.Mixed, // 混合类型
-    },
-    sort: {
-      type: Number,
-      default: 100,
-    },
-    description: { type: String },
-    status: {
-      type: Number,
-      default: 1,
-    },
-    add_time: {
-      type: Number,
-      default: d.getTime(),
-    },
-  });
-  return mongoose.model('Access', AccessSchema, 'access');
+    const { STRING, INTEGER, ANY } = app.Sequelize;
+
+    const Access = app.model.define('access', {
+        module_name: STRING, // 模块名称
+        action_name: STRING, // 操作名称
+        type: INTEGER, // 节点类型 :  1、表示模块   2、表示菜单     3、操作
+        url: STRING,
+        module_id: INTEGER, // 此module_id和当前模型的_id关联     module_id= 0 表示模块
+        sort: {
+            type: INTEGER,
+            default: 100,
+        },
+        description: STRING,
+        status: {
+            type: INTEGER,
+            default: 1,
+        },
+
+    }, {
+        tebleName: 'access' // 表名
+    });
+
+    // 这里是自关联，自己的moudle_id = 0的数据有三个，每一个都moudle_id = 0的数据对应的id号 都有很多条数据的moudle_id与之对应，我先找到moudle_id = 0的三个数据，再去关联查找moudle_id等于这个三个数据的id号的数据
+
+    // 自己关联自己，外键是module_id，一个module_id = 0的id下面对应了很多个module_id
+    Access.associate = function () {
+        app.model.Access.hasMany(app.model.Access, { foreignKey: 'module_id' });
+    }
+
+
+
+    return Access;
 };

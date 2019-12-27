@@ -1,25 +1,38 @@
+'use strict';
+
+// 配置好了直接在这里面定义表
 module.exports = app => {
-  const mongoose = app.mongoose;
-  const Schema = mongoose.Schema;
+    const { STRING, INTEGER, DATE } = app.Sequelize;
 
-  const d = new Date();
+    const Admin = app.model.define('admin', {
+        // 默认给你个主键
+        // id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+        username: STRING,
+        password: STRING,
+        mobel: INTEGER,
+        email: {
+            type: STRING,
+            // unique: true,
+            defaultValue: ''
+        },
+        status: { 
+            type: INTEGER, 
+            defaultValue: 1 
+        },
+        is_super: { // 是否是超级管理员      1表示超级管理员
+            type: INTEGER,
+            defaultValue: 0 
+        }, 
+        // 这个是用户，他需要和角色表关联，这是个外键
+        role_id: INTEGER, //   角色id
+    }, {
+        tebleName: 'admin' // 表名
+    });
 
-  const AdminSchema = new Schema({
-    username: { type: String },
-    password: { type: String },
-    mobile: { type: String },
-    email: { type: String },
-    status: { type: Number, default: 1 },
-    role_id: { type: Schema.Types.ObjectId }, //   角色id
-    add_time: {
-      type: Number,
-      default: d.getTime(),
+    // 管理员表关联角色表，一个角色有很多管理员用belongsTo，外键是role_id
+    Admin.associate = function () {
+        app.model.Admin.belongsTo(app.model.Role, { foreignKey: 'role_id' });
+    }
 
-    },
-    is_super: { type: Number, default: 0 }, // 是否是超级管理员      1表示超级管理员
-
-  });
-
-
-  return mongoose.model('Admin', AdminSchema, 'admin');
+    return Admin;
 };

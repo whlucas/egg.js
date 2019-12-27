@@ -3,128 +3,112 @@
 const BaseController = require('./base.js');
 
 class ManagerController extends BaseController {
-  async index() {
 
-    // 查询管理员表并管理角色表
+	// 管理员列表
+	async index() {
+		// 查询管理员表并管理角色表
+		const result = await this.ctx.model.Admin.findAll({
+			include: {
+				model: this.ctx.model.Role
+			}
+		});
+		console.log(result);
+		await this.ctx.render('admin/manager/index', {
 
+			list: result,
+		});
 
-    const result = await this.ctx.model.Admin.aggregate([{
+	}
 
-      $lookup: {
-        from: 'role',
-        localField: 'role_id',
-        foreignField: '_id',
-        as: 'role',
+	// 增加管理员
+	async add() {
+		// 要获取一下角色返回给前端，让前端填表
+		const roleResult = await this.ctx.model.Role.findAll({});
+		await this.ctx.render('admin/manager/add', {
+			roleResult,
+		});
 
-      },
-    }]);
+	}
 
-    console.log(result);
-    await this.ctx.render('admin/manager/index', {
+	async doAdd() {
+		console.log(this.ctx.request.body);
 
-      list: result,
-    });
-
-  }
-
-
-  async add() {
-
-
-    const roleResult = await this.ctx.model.Role.find();
-    await this.ctx.render('admin/manager/add', {
-
-      roleResult,
-    });
-
-  }
-
-  async doAdd() {
-    console.log(this.ctx.request.body);
-
-    const addResult = this.ctx.request.body;
-    addResult.password = await this.service.tools.md5(addResult.password);
+		const addResult = this.ctx.request.body;
+		addResult.password = await this.service.tools.md5(addResult.password);
 
 
-    // 判断当前用户是否存在
+		// 判断当前用户是否存在
 
-    const adminResult = await this.ctx.model.Admin.find({ username: addResult.username });
+		const adminResult = await this.ctx.model.Admin.findOne({
+			where: {
+				username: addResult.username
+			}
+		});
 
+		console.log(addResult)
 
-    if (adminResult.length > 0) {
+		if (adminResult) {
+			await this.error('/admin/manager/add', '此管理员已经存在');
+		} else {
 
-      await this.error('/admin/manager/add', '此管理员已经存在');
-    } else {
+			await this.ctx.model.Admin.create(addResult);
 
-      const admin = new this.ctx.model.Admin(addResult);
+			await this.success('/admin/manager', '增加用户成功');
 
-      admin.save();
-      await this.success('/admin/manager', '增加用户成功');
+		}
+	}
 
+	async edit() {
 
-    }
+		// 获取编辑的数据
 
+		const id = this.ctx.request.query.id;
 
-  }
+		// 获取管理员
+		const adminResult = await this.ctx.model.Admin.findByPk(id);
 
-  async edit() {
+		// 获取角色
+		const roleResult = await this.ctx.model.Role.findAll({});
 
-    // 获取编辑的数据
+		await this.ctx.render('admin/manager/edit', {
 
-    const id = this.ctx.request.query.id;
+			adminResult,
 
-    const adminResult = await this.ctx.model.Admin.find({ _id: id });
-
-    console.log(adminResult);
-
-    // 获取角色
-    const roleResult = await this.ctx.model.Role.find();
-
-    await this.ctx.render('admin/manager/edit', {
-
-      adminResult: adminResult[0],
-
-      roleResult,
-    });
-  }
-
-
-  async doEdit() {
-
-    // console.log(this.ctx.request.body);
-
-    const id = this.ctx.request.body.id;
-    let password = this.ctx.request.body.password;
-    const mobile = this.ctx.request.body.mobile;
-    const email = this.ctx.request.body.email;
-    const role_id = this.ctx.request.body.role_id;
-
-    if (password) {
-      // 修改密码
-      password = await this.service.tools.md5(password);
-      await this.ctx.model.Admin.updateOne({ _id: id }, {
-        password,
-        mobile,
-        email,
-        role_id,
-      });
-
-    } else {
-
-      // 不修改密码
-      await this.ctx.model.Admin.updateOne({ _id: id }, {
-        mobile,
-        email,
-        role_id,
-      });
-
-    }
+			roleResult,
+		});
+	}
 
 
-    await this.success('/admin/manager', '修改用户信息成功');
+	async doEdit() {
 
+		// console.log(this.ctx.request.body);
 
-  }
+		const id = this.ctx.request.body.id;
+		let password = this.ctx.request.body.password;
+		const mobile = this.ctx.request.body.mobile;
+		const email = this.ctx.request.body.email;
+		const role_id = this.ctx.request.body.role_id;
+
+		const result = await this.ctx.model.Admin.findByPk(id);
+
+		if (password) {
+			// 修改密码
+			password = await this.service.tools.md5(password);
+			await result.update({
+				password,
+				mobile,
+				email,
+				role_id,
+			})
+		} else {
+			await result.update({
+				mobile,
+				email,
+				role_id,
+			})
+		}
+		await this.success('/admin/manager', '修改用户信息成功');
+	}
 }
 
 module.exports = ManagerController;

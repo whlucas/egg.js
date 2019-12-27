@@ -59,29 +59,29 @@
 
                     <td><%=list[i].description%></td>
                 
-                    <td class="text-center"><a href="/admin/access/edit?id=<%=list[i]._id%>">修改</a></td>
+                    <td class="text-center"><a href="/admin/access/edit?id=<%=list[i].id%>">修改</a></td>
                 </tr>
 
-                <%for(var j=0;j<list[i].items.length;j++){%>
+                <%for(var j=0;j<list[i].accesses.length;j++){%>
                             <tr>
-                                    <td>----<%=list[i].items[j].module_name%></td>
+                                    <td>----<%=list[i].accesses[j].module_name%></td>
                                     <td>     
-                                            <%if(list[i].items[j].type==1){%>
+                                            <%if(list[i].accesses[j].type==1){%>
                                                 模块
-                                            <%}else if(list[i].items[j].type==2){%>
+                                            <%}else if(list[i].accesses[j].type==2){%>
                                                 菜单
                                             <%}else{%>
                                                 操作
                                             <%}%>
                                     </td>
-                                    <td><%=list[i].items[j].action_name%></td>
+                                    <td><%=list[i].accesses[j].action_name%></td>
     
-                                    <td><%=list[i].items[j].url%></td>
-                                    <td><%=list[i].items[j].sort%></td>
+                                    <td><%=list[i].accesses[j].url%></td>
+                                    <td><%=list[i].accesses[j].sort%></td>
     
-                                    <td><%=list[i].items[j].description%></td>
+                                    <td><%=list[i].accesses[j].description%></td>
                                 
-                                    <td class="text-center"><a href="/admin/access/edit?id=<%=list[i].items[j]._id%>">修改</a>  <a  class="delete" href="/admin/delete?id=<%=list[i].items[j]._id%>&model=Access">删除</a></td>
+                                    <td class="text-center"><a href="/admin/access/edit?id=<%=list[i].accesses[j].id%>">修改</a>  <a  class="delete" href="/admin/delete?id=<%=list[i].accesses[j].id%>&model=Access">删除</a></td>
                                 </tr>
 
                 <%}%>

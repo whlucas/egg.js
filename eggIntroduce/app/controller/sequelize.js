@@ -15,11 +15,11 @@ class AdminController extends Controller {
 
     // 添加数据
     async create() {
-        const ctx = this.ctx; 
+        const ctx = this.ctx;
         // 这个里面可以拿到model
-        const user = await ctx.model.User.create({ name: "李四", age: 20 }); 
+        const user = await ctx.model.User.create({ name: "李四", age: 20 });
         ctx.status = 201;
-        ctx.body = user
+        ctx.body = user;
     }
 
     // 依据主键查询数据

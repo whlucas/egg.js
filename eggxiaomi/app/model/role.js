@@ -1,20 +1,22 @@
+'use strict';
+
+// 配置好了直接在这里面定义表
 module.exports = app => {
-  const mongoose = app.mongoose;
-  const Schema = mongoose.Schema;
+    const { STRING, INTEGER, DATE } = app.Sequelize;
 
-  const d = new Date();
+    const Role = app.model.define('role', {
+        // 默认给你个主键
+        // id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+        title: STRING,
+        description: STRING,
+        
+        status: {
+            type: INTEGER,
+            defaultValue: 1
+        },
+    }, {
+        tebleName: 'role' // 表名
+    });
 
-  const RoleSchema = new Schema({
-    title: { type: String },
-    description: { type: String },
-    status: { type: Number, default: 1 },
-    add_time: {
-      type: Number,
-      default: d.getTime(),
-    },
-
-  });
-
-
-  return mongoose.model('Role', RoleSchema, 'role');
+    return Role;
 };

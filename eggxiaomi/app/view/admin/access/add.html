@@ -17,9 +17,9 @@
                                 节点类型:
                                 <!-- 1、表示模块   2、表示菜单     3、操作 -->
                                 <select name="type" id="type">
-                                        <option value="1">模块</option>
-                                        <option value="2">菜单</option>
-                                        <option value="3">操作</option>
+                                        <option value = 1>模块</option>
+                                        <option value = 2>菜单</option>
+                                        <option value = 3>操作</option>
                                 </select>
 
                             </li>
@@ -31,10 +31,10 @@
 
                             <li>  所属模块:
                                     <select name="module_id" id="module_id">
-                                            <option value="0">---顶级模块--</option>
+                                            <option value = 0>---顶级模块--</option>
                                             
                                             <%for(var i=0;i<moduleList.length;i++){%>
-                                                    <option value="<%=moduleList[i]._id%>"><%=moduleList[i].module_name%></option> 
+                                                    <option value = <%=moduleList[i].id%>><%=moduleList[i].module_name%></option> 
 
                                             <%}%>
                                             

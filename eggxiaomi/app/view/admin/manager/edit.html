@@ -10,7 +10,7 @@
             <div class="table-responsive input-form">
                 <form action="/admin/manager/doEdit" method="post">
                     <input type="hidden" name="_csrf" value="<%=csrf%>">
-                    <input type="hidden" name="id" readonly value="<%=adminResult._id%>"/>
+                    <input type="hidden" name="id" readonly value="<%=adminResult.id%>"/>
                     <ul>
                         <li>  管理员名称: <input type="text" name="username" readonly value="<%=adminResult.username%>"/></li>
                         <li>  管理员密码: <input type="text" name="password"/></li>
@@ -23,12 +23,11 @@
                             <select name="role_id" id="role_id">
 
                                     <%for(var i=0;i<roleResult.length;i++){%>
-                                        <!-- 注意_id的类型 -->
-                                        <%if(roleResult[i]._id.toString()==adminResult.role_id.toString()){%>
+                                        <%if(roleResult[i].id.toString()==adminResult.role_id.toString()){%>
 
-                                                <option value="<%=roleResult[i]._id%>" selected><%=roleResult[i].title%></option>
+                                                <option value="<%=roleResult[i].id%>" selected><%=roleResult[i].title%></option>
                                         <%}else{%>
-                                                <option value="<%=roleResult[i]._id%>"><%=roleResult[i].title%></option>
+                                                <option value="<%=roleResult[i].id%>"><%=roleResult[i].title%></option>
                                         <%}%>
                                     <%}%>
                             </select>

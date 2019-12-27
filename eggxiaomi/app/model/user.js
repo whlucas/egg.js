@@ -1,29 +1,30 @@
+'use strict';
+
+// 配置好了直接在这里面定义表
 module.exports = app => {
-  const mongoose = app.mongoose;
-  const Schema = mongoose.Schema;
+    const { STRING, INTEGER, DATE, NOW } = app.Sequelize;
+    const d = new Date();
 
-  const d = new Date();
-  const User = new Schema({
+    const User = app.model.define('user', {
+        // 默认给你个主键
+        // id: { type: INTEGER, primaryKey: true, autoIncrement: true },
 
+        password: STRING,
+        phone: INTEGER,
+        last_ip: STRING,
+        email: {
+            type: STRING,
+            unique: true,
+            defaultValue: ''
+        },
+        status: { 
+            type: DATE, 
+            defaultValue: NOW 
+        },
+    },{
+        // 其他的配置参数在这个里面写
+        tebleName: 'user' // 表名
+    });
 
-    password: { type: String },
-    phone: { type: Number },
-    last_ip: { type: String },
-    add_time: {
-      type: Number,
-      default: d.getTime(),
-    },
-    email: {
-
-      type: String,
-      default: '',
-
-    },
-    status: {
-      type: Number,
-      default: d.getTime(),
-    },
-  });
-
-  return mongoose.model('User', User, 'user');
+    return User;
 };
