@@ -38,11 +38,12 @@
                                     <td  class="text-center">
 
                                             <%if(list[i].status==1){%>
-
-                                                    <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'Admin','status','<%=list[i].id%>')" />
+                                                    <!-- 这个this表示这个img的dom结点 -->
+                                                    <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'Admin', 'status','<%=list[i].id%>')" />
 
                                             <%}else{%>
-                                                    <img src="/public/admin/images/no.gif"  onclick="app.changeStatus(this,'Admin','status','<%=list[i].id%>')" />
+                                                    <img src="/public/admin/images/no.gif"
+                                                        onclick="app.changeStatus(this,'Admin', 'status','<%=list[i].id%>')" />
                                             <%}%>
 
                                     </td>    

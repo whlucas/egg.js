@@ -54,19 +54,19 @@
                                             <td><img class="pic" src="<%=list[i].focus_img%>" /></td>
                                             <td><%=list[i].link%></td>
 
-                                            <td class="text-center"><span onclick="app.editNum(this,'Focus','sort','<%=list[i]._id%>')"><%=list[i].sort%></span></td>
+                                            <td class="text-center"><span onclick="app.editNum(this,'Focus','sort','<%=list[i].id%>')"><%=list[i].sort%></span></td>
                                             <td class="text-center">
 
                                                 <%if(list[i].status==1){%>
 
-                                                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'Focus','status','<%=list[i]._id%>')" />
+                                                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'Focus','status','<%=list[i].id%>')" />
 
                                                 <%}else{%>
-                                                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus(this,'Focus','status','<%=list[i]._id%>')" />
+                                                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus(this,'Focus','status','<%=list[i].id%>')" />
                                                 <%}%>
 
                                             </td>                                                                    
-                                            <td class="text-center">　<a href="/admin/focus/edit?id=<%=list[i]._id%>">修改</a>　<a class="delete" href="/admin/delete?model=Focus&id=<%=list[i]._id%>">删除</a></td>
+                                            <td class="text-center">　<a href="/admin/focus/edit?id=<%=list[i].id%>">修改</a>　<a class="delete" href="/admin/delete?model=Focus&id=<%=list[i].id%>">删除</a></td>
                                         </tr>
                             
 

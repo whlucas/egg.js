@@ -8,6 +8,8 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive input-form">
+                <!-- 表单上传文件要加enctype="multipart/form-data"，加了这个东西就不是用this.ctx.request.body接收了，就是用流的形式接收了 -->
+                <!-- 这里的_csrf要以get传值的形式写，不能写在body里面了，因为写在post里面的东西都会以流的形式进行传输 -->
                 <form action="/admin/focus/doAdd?_csrf=<%=csrf%>" method="post" enctype="multipart/form-data">
                     <ul>
                        

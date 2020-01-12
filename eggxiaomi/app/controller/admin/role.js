@@ -9,6 +9,8 @@ class RoleController extends BaseController {
 
 		// 这里都找出来需要({})，不能直接()
 		const result = await this.ctx.model.Role.findAll({});
+
+		console.log(result);
 		await this.ctx.render('admin/role/index', {
 			// 这里不用往里面传.dataValues自动帮你序列化
 			list: result,

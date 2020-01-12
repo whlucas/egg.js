@@ -27,6 +27,9 @@ var showdown  = require('showdown');
 
 */
 
+// 这个里面封装的方法可以直接在模板里面调用
+// helper.formatTime
+
 module.exports = {
 
 

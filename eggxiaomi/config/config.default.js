@@ -37,7 +37,8 @@ module.exports = appInfo => {
 	};
 
 
-	// config.multipart= {
+	// 配置多文件上传的时候允许上传的文件格式
+	// config.multipart = {
 	//   whitelist: [ '.png' ], // 覆盖整个白名单，只允许上传 '.png' 格式
 	// }
 

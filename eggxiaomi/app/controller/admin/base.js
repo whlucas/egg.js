@@ -85,14 +85,14 @@ class BaseController extends Controller {
 		const attr = this.ctx.request.query.attr;  /* 更新的属性 如:status is_best */
 		const id = this.ctx.request.query.id; /* 更新的 id*/
 
-		const result = await this.ctx.model[model].find({ _id: id });
+		const result = await this.ctx.model[model].findOne({ id });
 
-		if (result.length > 0) {
+		if (result) {
 
 
-			if (result[0][attr] == 1) {
+			if (result[attr] == 1) {
 
-				var json = {/* es6 属性名表达式*/
+				var json = {
 
 					[attr]: 0,
 				};
@@ -105,7 +105,12 @@ class BaseController extends Controller {
 			}
 
 			// 执行更新操作
-			const updateResult = await this.ctx.model[model].updateOne({ _id: id }, json);
+
+			const updateResult = await this.ctx.model[model].update(json, {
+				where: {   // 这里第二个参数不能简写
+					id
+				}
+			});
 
 			if (updateResult) {
 				this.ctx.body = { message: '更新成功', success: true };
@@ -134,9 +139,9 @@ class BaseController extends Controller {
 		const id = this.ctx.request.query.id; /* 更新的 id*/
 		const num = this.ctx.request.query.num; /* 数量*/
 
-		const result = await this.ctx.model[model].find({ _id: id });
+		const result = await this.ctx.model[model].findByPk(id);
 
-		if (result.length > 0) {
+		if (result) {
 
 			const json = {/* es6 属性名表达式*/
 
@@ -144,7 +149,11 @@ class BaseController extends Controller {
 			};
 
 			// 执行更新操作
-			const updateResult = await this.ctx.model[model].updateOne({ _id: id }, json);
+			const updateResult = await this.ctx.model[model].update(json, {
+				where: {
+					id
+				}
+			});
 
 			if (updateResult) {
 				this.ctx.body = { message: '更新成功', success: true };
