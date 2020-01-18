@@ -24,7 +24,7 @@
                                     <%for(var i=0;i<goodsTypes.length;i++){%>
 
                                     
-                                            <option <%if(cate_id.toString()==goodsTypes[i]._id.toString()){%>selected<%}%> value="<%=goodsTypes[i]._id%>" ><%=goodsTypes[i].title%></option>                                           
+                                            <option <%if(cate_id.toString()==goodsTypes[i].id.toString()){%>selected<%}%> value="<%=goodsTypes[i].id%>" ><%=goodsTypes[i].title%></option>                                           
                                     <%}%>
                             </select>
                         </li> 

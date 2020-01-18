@@ -31,7 +31,7 @@
                                     <tr>
                                             <td><%=list[i].title%></td>
                                             
-                                            <td><%=list[i].goods_type[0].title%></td>
+                                            <td><%=list[i].goods_type.title%></td>
                                             <td>                                                
                                                 <%if(list[i].attr_type==1){%>
                                                     单行文本框
@@ -49,15 +49,15 @@
 
                                                     <%if(list[i].status==1){%>
 
-                                                            <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'GoodsTypeAttribute','status','<%=list[i]._id%>')" />
+                                                            <img src="/public/admin/images/yes.gif" onclick="app.changeStatus(this,'GoodsTypeAttribute','status','<%=list[i].id%>')" />
 
                                                     <%}else{%>
-                                                            <img src="/public/admin/images/no.gif" onclick="app.changeStatus(this,'GoodsTypeAttribute','status','<%=list[i]._id%>')" />
+                                                            <img src="/public/admin/images/no.gif" onclick="app.changeStatus(this,'GoodsTypeAttribute','status','<%=list[i].id%>')" />
                                                     <%}%>
 
                                             </td>    
                                                                 
-                                            <td class="text-center"><a href="/admin/goodsTypeAttribute/edit?id=<%=list[i]._id%>">修改</a>　<a  class="delete" href="/admin/delete?model=GoodsTypeAttribute&id=<%=list[i]._id%>">删除</a></td>
+                                            <td class="text-center"><a href="/admin/goodsTypeAttribute/edit?id=<%=list[i].id%>">修改</a>　<a  class="delete" href="/admin/delete?model=GoodsTypeAttribute&id=<%=list[i].id%>">删除</a></td>
                                         </tr>
                                         
 

@@ -1,119 +1,111 @@
 const BaseController = require('./base.js');
 class GoodsTypeAttributeController extends BaseController {
-  async index() {
+	async index() {
 
-    // 显示对应类型的属性
+		// 显示对应类型的属性
 
-    // 获取当前属性的类型id   分类id
-
-
-    const cate_id = this.ctx.request.query.id;
-
-    // console.log(cate_id);
-
-    // 获取当前的类型
-
-    const goodsType = await this.ctx.model.GoodsType.find({ _id: cate_id });
-
-    //  var result=await this.ctx.model.GoodsTypeAttribute.find({"cate_id":cate_id});
-
-    const result = await this.ctx.model.GoodsTypeAttribute.aggregate([
-
-      {
-        $lookup: {
-          from: 'goods_type',
-          localField: 'cate_id',
-          foreignField: '_id',
-          as: 'goods_type',
-        },
-      },
-      {
-        $match: { // cate_id字符串
-          cate_id: this.app.mongoose.Types.ObjectId(cate_id), // 注意
-        },
-      },
-    ]);
-
-    // console.log(result)
-    await this.ctx.render('admin/goodsTypeAttribute/index', {
-
-      list: result,
-      cate_id,
-      goodsType: goodsType[0],
-    });
-  }
+		// 获取当前属性的类型id   分类id
 
 
-  async add() {
+		const cate_id = this.ctx.request.query.id;
+
+		const goodsType = await this.ctx.model.GoodsType.findOne({
+			where: {
+				id: cate_id
+			}
+		})
 
 
-    // 获取类型数据
+		// 这里需要关联查询到GoodsType表中的类型
+		const result = await this.ctx.model.GoodsTypeAttribute.findAll({
+			where: {
+				cate_id
+			},
+			include: {
+				model: this.ctx.model.GoodsType
+			}
+		});
 
-    const cate_id = this.ctx.request.query.id;
-    const goodsTypes = await this.ctx.model.GoodsType.find({});
-
-    await this.ctx.render('admin/goodsTypeAttribute/add', {
-
-      cate_id,
-      goodsTypes,
-
-    });
-
-  }
-
-  async doAdd() {
-
-
-    const res = new this.ctx.model.GoodsTypeAttribute(this.ctx.request.body);
-
-    await res.save(); // 注意
-
-    await this.success('/admin/goodsTypeAttribute?id=' + this.ctx.request.body.cate_id, '增加商品类型属性成功');
+		await this.ctx.render('admin/goodsTypeAttribute/index', {
+			list: result,
+			cate_id,
+			goodsType
+		});
+	}
 
 
-  }
+	async add() {
 
 
-  // 功能还没有实现
-  async edit() {
+		// 获取类型数据
+
+		const cate_id = this.ctx.request.query.id;
+		const goodsTypes = await this.ctx.model.GoodsType.findAll();
+
+		await this.ctx.render('admin/goodsTypeAttribute/add', {
+
+			cate_id,
+			goodsTypes,
+
+		});
+
+	}
+
+	async doAdd() {
+
+		await this.ctx.model.GoodsTypeAttribute.create(this.ctx.request.body);
+
+		await this.success('/admin/goodsTypeAttribute?id=' + this.ctx.request.body.cate_id, '增加商品类型属性成功');
+
+	}
 
 
-    const id = this.ctx.query.id;
+	// 功能还没有实现
+	async edit() {
 
-    const result = await this.ctx.model.GoodsTypeAttribute.find({ _id: id });
+		const id = this.ctx.query.id;
 
-    const goodsTypes = await this.ctx.model.GoodsType.find({});
+		const result = await this.ctx.model.GoodsTypeAttribute.findOne({
+			where: {
+				id 
+			}
+		});
 
-    await this.ctx.render('admin/goodsTypeAttribute/edit', {
+		const goodsTypes = await this.ctx.model.GoodsType.findAll();
 
-      list: result[0],
-      goodsTypes,
-    });
+		await this.ctx.render('admin/goodsTypeAttribute/edit', {
 
-  }
+			list: result,
+			goodsTypes,
+		});
 
-  async doEdit() {
+	}
 
-
-    const _id = this.ctx.request.body._id;
-
-    // var title=this.ctx.request.body.title;
-
-    // var cate_id=this.ctx.request.body.cate_id;
-
-    // var attr_type=this.ctx.request.body.attr_type;
-
-    // var attr_value=this.ctx.request.body.attr_value;
-
-    // console.log(this.ctx.request.body);
+	async doEdit() {
 
 
-    await this.ctx.model.GoodsTypeAttribute.updateOne({ _id }, this.ctx.request.body);
+		const id = this.ctx.request.body.id;
+
+		// var title=this.ctx.request.body.title;
+
+		// var cate_id=this.ctx.request.body.cate_id;
+
+		// var attr_type=this.ctx.request.body.attr_type;
+
+		// var attr_value=this.ctx.request.body.attr_value;
+
+		// console.log(this.ctx.request.body);
 
 
-    await this.success('/admin/goodsTypeAttribute?id=' + this.ctx.request.body.cate_id, '修改商品类型属性成功');
+		await this.ctx.model.GoodsTypeAttribute.update(this.ctx.request.body, {
+			where: {
+				id
+			}
+		});
 
-  }
+		await this.success('/admin/goodsTypeAttribute?id=' + this.ctx.request.body.cate_id, '修改商品类型属性成功');
+
+	}
 
 }
 module.exports = GoodsTypeAttributeController;

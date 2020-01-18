@@ -15,7 +15,7 @@
                         <input type="hidden" name="_csrf" value="<%=csrf%>">
 
 
-                        <input type="hidden" name="_id" value="<%=list._id%>">
+                        <input type="hidden" name="id" value="<%=list.id%>">
 
 
                         <li>  　属性名称： <input type="text" name="title" value=<%=list.title%> /></li> 
@@ -27,7 +27,7 @@
                                     <%for(var i=0;i<goodsTypes.length;i++){%>
 
                                     
-                                            <option <%if(list.cate_id.toString()==goodsTypes[i]._id.toString()){%>selected<%}%> value="<%=goodsTypes[i]._id%>" ><%=goodsTypes[i].title%></option>                                           
+                                            <option <%if(list.cate_id.toString()==goodsTypes[i].id.toString()){%>selected<%}%> value="<%=goodsTypes[i].id%>" ><%=goodsTypes[i].title%></option>                                           
                                     <%}%>
                             </select>
                         </li> 
