@@ -87,12 +87,13 @@ module.exports = appInfo => {
 		},
 	};
 
-	// 配置表单数量
+	// 配置表单数量 这个不配置必出错
+	// 以form的形式提交的时候最大可允许上传的数量
 	exports.multipart = {
 		fields: '50',
 	};
 
-
+	// 那些请求要跳过csrf验证
 	exports.security = {
 		csrf: {
 			// 判断是否需要 ignore 的方法，请求上下文 context 作为第一个参数

@@ -42,30 +42,18 @@ class GoodsController extends BaseController {
   async add() {
 
     // 获取所有的颜色值
-    const colorResult = await this.ctx.model.GoodsColor.find({});
+    const colorResult = await this.ctx.model.GoodsColor.findAll();
 
     // 获取所有的商品类型
-    const goodsType = await this.ctx.model.GoodsType.find({});
+    const goodsType = await this.ctx.model.GoodsType.findAll();
 
     // 获取商品分类
 
-    const goodsCate = await this.ctx.model.GoodsCate.aggregate([
-
-      {
-        $lookup: {
-          from: 'goods_cate',
-          localField: '_id',
-          foreignField: 'pid',
-          as: 'items',
-        },
-      },
-      {
-        $match: {
-          pid: '0',
-        },
-      },
-
-    ]);
+    const goodsCate = await this.ctx.model.GoodsCateType.findAll({
+      include: {
+        model: this.ctx.model.GoodsCate
+      }
+    });
 
 
     await this.ctx.render('admin/goods/add', {
@@ -405,9 +393,13 @@ class GoodsController extends BaseController {
     const cate_id = this.ctx.request.query.cate_id;
 
     // 注意 await
-    const goodsTypeAttribute = await this.ctx.model.GoodsTypeAttribute.find({ cate_id });
+    const goodsTypeAttribute = await this.ctx.model.GoodsTypeAttribute.findAll({
+      where: {
+        cate_id
+      }
+    });
 
-    console.log(goodsTypeAttribute);
+    // console.log(goodsTypeAttribute);
 
     this.ctx.body = {
       result: goodsTypeAttribute,

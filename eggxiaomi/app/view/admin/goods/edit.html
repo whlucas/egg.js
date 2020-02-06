@@ -49,7 +49,7 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="general">
 
-                                <input type="hidden" name="id" value="<%=goods._id%>" />
+                                <input type="hidden" name="id" value="<%=goods.id%>" />
 
                                 <input type="hidden" name="prevPage" value="<%=prevPage%>" />
 
@@ -64,9 +64,9 @@
 
                                                 <%for(var i=0;i<goodsCate.length;i++){%>
                               
-                                                        <option value="<%=goodsCate[i]._id%>" <%if(goods.cate_id.toString()==goodsCate[i]._id.toString()){%>selected<%}%> ><%=goodsCate[i].title%></option>
+                                                        <option value="<%=goodsCate[i].id%>" <%if(goods.cate_id.toString()==goodsCate[i].id.toString()){%>selected<%}%> ><%=goodsCate[i].title%></option>
                                                         <%for(var j=0;j<goodsCate[i].items.length;j++){%>
-                                                                <option value="<%=goodsCate[i].items[j]._id%>" <%if(goods.cate_id.toString()==goodsCate[i].items[j]._id.toString()){%>selected<%}%>>----<%=goodsCate[i].items[j].title%></option>      
+                                                                <option value="<%=goodsCate[i].items[j].id%>" <%if(goods.cate_id.toString()==goodsCate[i].items[j].id.toString()){%>selected<%}%>>----<%=goodsCate[i].items[j].title%></option>      
         
                                                                 
                                                         <%}%>
@@ -116,12 +116,12 @@
                                                 <%for(var i=0;i<colorResult.length;i++){%>
 
 
-                                                    <%if(goods.goods_color.indexOf(colorResult[i]._id.toString())!=-1){%>
+                                                    <%if(goods.goods_color.indexOf(colorResult[i].id.toString())!=-1){%>
                                                         
-                                                        <input type="checkbox" checked name="goods_color" value="<%=colorResult[i]._id%>" id="color_<%=colorResult[i]._id%>" /> <label for="color_<%=colorResult[i]._id%>"><%=colorResult[i].color_name%></label>
+                                                        <input type="checkbox" checked name="goods_color" value="<%=colorResult[i].id%>" id="color_<%=colorResult[i].id%>" /> <label for="color_<%=colorResult[i].id%>"><%=colorResult[i].color_name%></label>
 
                                                    <%}else{%>
-                                                        <input type="checkbox" name="goods_color" value="<%=colorResult[i]._id%>" id="color_<%=colorResult[i]._id%>" /> <label for="color_<%=colorResult[i]._id%>"><%=colorResult[i].color_name%></label>
+                                                        <input type="checkbox" name="goods_color" value="<%=colorResult[i].id%>" id="color_<%=colorResult[i].id%>" /> <label for="color_<%=colorResult[i].id%>"><%=colorResult[i].color_name%></label>
                                                     <%}%>
 
                                                 <%}%>
@@ -183,7 +183,7 @@
                                                 <option value="0">--请选择商品类型--</option>
 
                                                 <%for(var i=0;i<goodsType.length;i++){%>
-                                                    <option value="<%=goodsType[i]._id%>" <%if(goods.goods_type_id.toString()==goodsType[i]._id.toString()){%>selected<%}%> ><%=goodsType[i].title%></option>
+                                                    <option value="<%=goodsType[i].id%>" <%if(goods.goods_type_id.toString()==goodsType[i].id.toString()){%>selected<%}%> ><%=goodsType[i].title%></option>
                                                 <%}%>
 
                                             </select>
@@ -212,17 +212,17 @@
    
                                                        <div class="color_list">
    
-                                                           <select class="relation_goods_color" goods_image_id="<%=goodsImage[i]._id%>">
+                                                           <select class="relation_goods_color" goods_image_id="<%=goodsImage[i].id%>">
                                                                <option value="0">关联颜色</option>
 
                                                                <%for(var j=0;j<goodsColor.length;j++){%>
    
-                                                                    <option value="<%=goodsColor[j]._id%>" <%if(goodsImage[i].color_id.toString()==goodsColor[j]._id){%>selected<%}%>  ><%=goodsColor[j].color_name%></option>
+                                                                    <option value="<%=goodsColor[j].id%>" <%if(goodsImage[i].color_id.toString()==goodsColor[j].id){%>selected<%}%>  ><%=goodsColor[j].color_name%></option>
                                                                <%}%>
                                                            </select>                                                        
                                                        </div>
 
-                                                       <div class="goods_image_delete" goods_image_id="<%=goodsImage[i]._id%>"></div>
+                                                       <div class="goods_image_delete" goods_image_id="<%=goodsImage[i].id%>"></div>
                                                    </li>
                                                <%}%>
                                         </ul>
@@ -285,13 +285,13 @@
                         for(var i=0;i<data.length;i++){
 
                             if(data[i].attr_type==1){    
-                            str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i]._id+'" />  <input type="text" name="attr_value_list" /></li>' 
+                            str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i].id+'" />  <input type="text" name="attr_value_list" /></li>' 
                             }else if(data[i].attr_type==2){
-                                str+='<li><span>'+data[i].title+': 　</span> <input type="hidden" name="attr_id_list" value="'+data[i]._id+'">  <textarea cols="50" rows="3" name="attr_value_list"></textarea></li>'                            
+                                str+='<li><span>'+data[i].title+': 　</span> <input type="hidden" name="attr_id_list" value="'+data[i].id+'">  <textarea cols="50" rows="3" name="attr_value_list"></textarea></li>'                            
                             }else{
                                 var arr=data[i].attr_value.split('\n');   
 
-                                str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i]._id+'">';
+                                str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i].id+'">';
 
                                     str+='<select name="attr_value_list">';
                                         
